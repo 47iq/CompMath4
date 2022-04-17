@@ -112,7 +112,7 @@ public class ApproximationImpl implements Approximation {
         double[][] newValues = originalValues.clone();
         inputDAO.setFunctionValues(Arrays.stream(newValues).map(x -> x[0] > 0 ? new double[]{Math.log(x[0]), x[1]} : new double[]{x[0], x[1]}).toArray(double[][]::new));
         ResultDAO resultDAO = approximateLinear(inputDAO);
-        Function<Double, Double> logFunction = x -> resultDAO.getSolution()[1] * Math.log(x) + resultDAO.getSolution()[0];
+        Function<Double, Double> logFunction = x -> resultDAO.getSolution()[0] * Math.log(x) + resultDAO.getSolution()[1];
         return new ResultDAO(resultDAO.getSolution(), logFunction, calculateDeviation(originalValues, logFunction), ApproximationType.LOGARITHMIC, calculateR2(originalValues, logFunction));
     }
 
